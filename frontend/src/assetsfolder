@@ -1,0 +1,19 @@
+import React from 'react';
+import forestBg from './assets/forest-bg.png';
+
+function App() {
+  return (
+    <div 
+      style={{
+        backgroundImage: `url(${forestBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        width: '100%'
+      }}
+    >
+      {/* Your app content */}
+    </div>
+  );
+}
