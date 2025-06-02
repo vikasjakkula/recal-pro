@@ -1,3 +1,6 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 .App {
   text-align: center;
 }
@@ -98,8 +101,679 @@
   color: #ccc;
 }
 
+/* Add styles for section headings */
+.section-heading {
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #61dafb;
+}
+
+.section-heading.right {
+  text-align: right;
+}
+
+/* Colorful Glowing Button Style */
+.glow-button {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 15px 30px;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5);
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, 
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  z-index: -1;
+  border-radius: 50px;
+  filter: blur(5px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.glow-button:hover::before {
+  opacity: 1;
+}
+
+.glow-button::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, 
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  z-index: -1;
+  border-radius: 50px;
+  filter: blur(20px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.glow-button:hover::after {
+  opacity: 1;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.glow-button:hover {
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  animation: colorRotate 3s linear infinite;
+}
+
+@keyframes colorRotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Add glowing effect to all buttons with gradient backgrounds */
+.gradient-glow {
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.gradient-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+}
+
 @media (max-width: 768px) {
   .container {
     grid-template-columns: 1fr;
   }
+  
+  .section-heading,
+  .section-heading.right {
+    text-align: center;
+  }
+}
+
+/* About Modal Animations */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-animation {
+  animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Enhanced hover effects for navigation links */
+.nav-link {
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(90deg, #ff69b4, #9f7aea);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Scrollbar styling for modal */
+.modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff69b4, #9f7aea);
+  border-radius: 4px;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff69b4, #7c3aed);
+}
+
+/* Enhanced backdrop blur */
+.backdrop-blur-custom {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(135deg, #ff69b4, #9f7aea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 6s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Contact Modal Styles */
+.contact-icon {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.contact-icon::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(45deg, #ff69b4, #9f7aea);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-icon:hover {
+  transform: translateY(-5px);
+}
+
+.contact-icon:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced Modal Styles */
+.modal-animation {
+  animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
+
+/* Professional Typography */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Contact Link Hover Effects */
+.contact-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.contact-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff69b4, #9f7aea);
+  transition: width 0.3s ease;
+}
+
+.contact-link:hover::after {
+  width: 100%;
+}
+
+/* Enhanced Modal Backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Floating Animation for Icons */
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-icon {
+  animation: floating 3s ease-in-out infinite;
+}
+
+/* Enhanced Card Hover Effects */
+.backdrop-blur-sm {
+  transition: all 0.3s ease-in-out;
+}
+
+.backdrop-blur-sm:hover {
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* Animated Gradient Text */
+.gradient-animate {
+  background: linear-gradient(
+    90deg,
+    #ff69b4,
+    #9f7aea,
+    #4fd1c5,
+    #9f7aea,
+    #ff69b4
+  );
+  background-size: 300% 100%;
+  animation: gradientShift 8s linear infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Feature Card Styles */
+.feature-card {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-card:hover {
+  border-color: rgba(236, 72, 153, 0.3);
+  transform: translateY(-5px);
+}
+
+/* Enhanced Typography */
+.heading-xl {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Checkmark Animation */
+@keyframes checkmarkPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.checkmark {
+  animation: checkmarkPop 0.3s ease-out forwards;
+}
+
+/* Enhanced Button Styles */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(45deg, #ff69b4, #9f7aea);
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #ff0000, #ff7300, #fffb00, #48ff00, 
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(10px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: inherit;
+}
+
+.glow-button:hover::before {
+  opacity: 1;
+}
+
+.glow-button:active {
+  transform: scale(0.98);
+}
+
+/* Rainbow Close Button Styles */
+.rainbow-close-button {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.rainbow-close-button:hover {
+  transform: scale(1.1) rotate(180deg);
+}
+
+.rainbow-close-button:active {
+  transform: scale(0.95) rotate(180deg);
+}
+
+/* Rainbow Glow Effect */
+.rainbow-glow {
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff8000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #8000ff,
+    #ff0080,
+    #ff0000
+  );
+  background-size: 400% 400%;
+  animation: rainbowMove 8s linear infinite;
+  filter: blur(8px);
+  transition: all 0.5s ease;
+}
+
+.rainbow-close-button:hover .rainbow-glow {
+  filter: blur(15px);
+  transform: scale(1.2);
+}
+
+@keyframes rainbowMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Close Icon Animation */
+.close-icon {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  transform-origin: center;
+}
+
+.rainbow-close-button:hover .close-icon {
+  transform: rotate(180deg) scale(1.2);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced Tooltip */
+.tooltip-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  perspective: 1000px;
+}
+
+.tooltip-text {
+  display: block;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px) rotateX(-90deg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.group:hover .tooltip-text {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+}
+
+/* Rainbow Border Animation */
+.rainbow-close-button::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff8000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #8000ff,
+    #ff0080,
+    #ff0000
+  );
+  background-size: 400% 400%;
+  border-radius: 50%;
+  z-index: -1;
+  animation: rainbowMove 8s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rainbow-close-button:hover::before {
+  opacity: 1;
+}
+
+/* Pulse Animation on Load */
+@keyframes pulseIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.rainbow-close-button {
+  animation: pulseIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Rainbow Button Animations */
+@keyframes rotate-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-slow-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotate-medium {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-fast {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Rainbow Button Utilities */
+.animate-rotate-slow {
+  animation: rotate-slow 8s linear infinite;
+}
+
+.animate-rotate-slow-reverse {
+  animation: rotate-slow-reverse 6s linear infinite;
+}
+
+.animate-rotate-medium {
+  animation: rotate-medium 4s linear infinite;
+}
+
+.animate-rotate-fast {
+  animation: rotate-fast 3s linear infinite;
+}
+
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+
+.bg-pos-0 {
+  background-position: 0% 50%;
+}
+
+.bg-pos-100 {
+  background-position: 100% 50%;
+}
+
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+/* Loading Animation Delays */
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-450 {
+  animation-delay: 450ms;
+}
+
+/* Enhanced Loading Animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Rotating Animations */
+@keyframes rotate-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-slow-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 3s linear infinite;
+}
+
+.animate-rotate-slow-reverse {
+  animation: rotate-slow-reverse 3s linear infinite;
 }

@@ -1,3 +1,58 @@
+# RecallPro Frontend
+
+A modern React dashboard for the RecallPro EAMCET exam preparation platform.
+
+## Features
+
+- Modern, responsive UI built with React and Tailwind CSS
+- Interactive navigation with search functionality
+- Mock test series management
+- Mobile-friendly design with collapsible sidebar
+- Beautiful gradient UI elements
+
+## Setup
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm start
+```
+
+The app will be available at http://localhost:3000
+
+## Project Structure
+
+```
+src/
+  ├── components/
+  │   ├── Navbar.jsx         # Top navigation bar
+  │   ├── Sidebar.jsx        # Left sidebar menu
+  │   ├── MockTestCard.jsx   # Individual test card component
+  │   ├── MockTestPage.jsx   # Main page layout
+  │   └── App.jsx           # Root component
+  └── index.js              # Entry point
+```
+
+## Technologies Used
+
+- React 18
+- Tailwind CSS
+- React Icons
+- Create React App
+
+## Development
+
+The project uses Create React App for the build setup. Available commands:
+
+- `npm start`: Start development server
+- `npm build`: Create production build
+- `npm test`: Run tests
+- `npm run eject`: Eject from Create React App
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
