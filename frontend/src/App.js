@@ -4,6 +4,10 @@ import GlowingButton from './GlowingButton';
 import forestBg from './fevicon2.webp' // Ensure this image exists in the correct path
 import Loading from './components/Loading';
 import Dashboard from './components/Dashboard';
+import { ThemeProvider } from './context/ThemeContext';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import aosConfig from './config/aos';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -216,12 +220,22 @@ function App() {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
+    // Initialize AOS with proper configuration
+    AOS.init(aosConfig);
+    
+    // Refresh AOS on window resize
+    const refreshAOS = () => AOS.refresh();
+    window.addEventListener('resize', refreshAOS);
+    
     // Initial loading animation
     const timer = setTimeout(() => {
       setInitialLoading(false);
     }, 1500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      window.removeEventListener('resize', refreshAOS);
+      clearTimeout(timer);
+    };
   }, []);
 
   const handleInputChange = (e) => {
@@ -233,100 +247,30 @@ function App() {
     setLoading(true);
     setMessage('');
 
-    // Validate form data
-    if (!formData.username.trim()) {
-      setMessage('Username is required');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.password.trim()) {
-      setMessage('Password is required');
-      setLoading(false);
-      return;
-    }
-
-    if (!isLoginMode) {
-      if (!formData.email.trim()) {
-        setMessage('Email is required');
-        setLoading(false);
-        return;
-      }
-
-      if (formData.password.length < 6) {
-        setMessage('Password must be at least 6 characters long');
-        setLoading(false);
-        return;
-      }
-
-      if (formData.password !== formData.confirmPassword) {
-        setMessage('Passwords do not match!');
-        setLoading(false);
-        return;
-      }
-    }
-
     try {
-      if (isLoginMode) {
-        const response = await fetch(`${API_URL}/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: formData.username.trim(),
-            password: formData.password
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.message || data.error || 'Login failed');
-        }
-
-        // Store the token in localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setMessage('Login successful!');
-      } else {
-        const response = await fetch(`${API_URL}/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: formData.username.trim(),
-            email: formData.email.trim(),
-            password: formData.password
-          })
-        });
-
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.message || data.error || 'Registration failed');
-        }
-
-        // Store the token in localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setMessage('Registration successful!');
-      }
-
-      // Clear form data
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+      const endpoint = isLoginMode ? `${API_URL}/login` : `${API_URL}/register`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
 
-      // Show success message and close modal
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'An error occurred');
+      }
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setMessage(`${isLoginMode ? 'Login' : 'Registration'} successful!`);
+
       setTimeout(() => {
         setShowModal(false);
-        setMessage('');
-        window.location.href = '/dashboard'; // Redirect to dashboard
+        window.location.href = '/dashboard';
       }, 2000);
     } catch (error) {
-      console.error('Error:', error);
-      setMessage(error.message || 'An error occurred');
+      setMessage(error.message);
     } finally {
       setLoading(false);
     }
@@ -348,36 +292,84 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route 
-        path="/" 
-        element={
-          <LandingPage
-            isLoginMode={isLoginMode}
-            showModal={showModal}
-            showAboutModal={showAboutModal}
-            showContactModal={showContactModal}
-            setShowModal={setShowModal}
-            setShowAboutModal={setShowAboutModal}
-            setShowContactModal={setShowContactModal}
-            handleSubmit={handleSubmit}
-            handleInputChange={handleInputChange}
-            toggleMode={toggleMode}
-            formData={formData}
-            loading={loading}
-            message={message}
+    <ThemeProvider>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <LandingPage
+                isLoginMode={isLoginMode}
+                showModal={showModal}
+                showAboutModal={showAboutModal}
+                showContactModal={showContactModal}
+                setShowModal={setShowModal}
+                setShowAboutModal={setShowAboutModal}
+                setShowContactModal={setShowContactModal}
+                handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
+                toggleMode={toggleMode}
+                formData={formData}
+                loading={loading}
+                message={message}
+              />
+            } 
           />
-        } 
-      />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mock-test"
+            element={
+              <ProtectedRoute>
+                <div className="p-8 text-center">
+                  <h1 className="text-3xl font-bold mb-4">Mock Test</h1>
+                  <p>Mock test interface coming soon...</p>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <div className="p-8 text-center">
+                  <h1 className="text-3xl font-bold mb-4">Analytics</h1>
+                  <p>Analytics dashboard coming soon...</p>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/resources"
+            element={
+              <ProtectedRoute>
+                <div className="p-8 text-center">
+                  <h1 className="text-3xl font-bold mb-4">Learning Resources</h1>
+                  <p>Resources library coming soon...</p>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <div className="p-8 text-center">
+                  <h1 className="text-3xl font-bold mb-4">Settings</h1>
+                  <p>Settings page coming soon...</p>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 
